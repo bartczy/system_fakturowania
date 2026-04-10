@@ -4,6 +4,9 @@ import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
 import java.io.File;
 import java.nio.file.Path;
+import java.util.List;
+
+import static org.example.DocumentParser.parseOCR;
 
 public class DocumentProcessor {
 
@@ -18,16 +21,23 @@ public class DocumentProcessor {
 
         // Ustawiamy język na polski
         tesseract.setLanguage("pol");
+        // PSM 6 zakłada, że tekst to jeden spójny blok tekstu (często ratuje tabele)
+        // Dostępna jest też opcja "4" ale póki co nie naprawiają problemu zjadania fragmentów
+        tesseract.setPageSegMode(6);
 
         try {
             String extractedText = tesseract.doOCR(imageFile);
 
             System.out.println("================ WYNIK OCR ================");
-            System.out.println(extractedText);
+            //System.out.println(extractedText);
+
+            //Parsowanie stringa na zlecenia, pozycja = strona
+            List<Zlecenie> zlecenia = parseOCR(extractedText);
+            for (Zlecenie z : zlecenia){
+                System.out.println(z.toString());
+            }
             System.out.println("===========================================");
 
-            // TODO Dane są w formie wielkiego stringa który trzeba będzie parsować gdy dostaniemy kartki
-            // parseDataFromText(extractedText);
 
         } catch (TesseractException e) {
             System.err.println("Błąd podczas rozpoznawania tekstu: " + e.getMessage());

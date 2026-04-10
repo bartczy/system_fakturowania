@@ -6,7 +6,7 @@ public class Main {
 
         // Zamiast męczyć się z łączeniem skanera używamy "hot directory" czyli nasłuchujemy dodania nowych plików i automatycznie je wsadzamy do programu
         // Z perspektywy klienta będzie to oznaczać że muszą odpalić aplikację a następnie skanować do odpowiedniego folderu a aplikacja zrobi resztę
-        Path scanFolder = Paths.get("C:\\Users\\bartek\\Documents\\projekt_zespolowy\\faktury_test");
+        Path scanFolder = Paths.get("C:\\Users\\bartek\\Documents\\0_szkola\\projekt_zespolowy\\faktury_test");
 
         try {
             // Upewniamy się, że folder istnieje
